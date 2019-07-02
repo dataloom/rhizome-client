@@ -36,38 +36,23 @@ public final class ObjectMappers {
     private ObjectMappers() {}
 
     protected static ObjectMapper createYamlMapper() {
-        ObjectMapper yamlMapper = new ObjectMapper( new YAMLFactory() );
-        yamlMapper.registerModule( new Jdk8Module() );
-        yamlMapper.registerModule( new GuavaModule() );
-        yamlMapper.registerModule( new JavaTimeModule() );
-        yamlMapper.registerModule( new AfterburnerModule() );
-        yamlMapper.registerModule( new JodaModule() );
-        yamlMapper.registerModule( new KotlinModule() );
-        yamlMapper.configure( SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false );
-        yamlMapper.disable( DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE );
-        return yamlMapper;
+        return configureMapper( new ObjectMapper( new YAMLFactory() ) );
     }
 
     protected static ObjectMapper createSmileMapper() {
-        ObjectMapper smileMapper = new ObjectMapper( new SmileFactory() );
-        smileMapper.registerModule( new Jdk8Module() );
-        smileMapper.registerModule( new GuavaModule() );
-        smileMapper.registerModule( new JavaTimeModule() );
-        smileMapper.registerModule( new AfterburnerModule() );
-        smileMapper.registerModule( new JodaModule() );
-        smileMapper.registerModule( new KotlinModule() );
-        smileMapper.configure( SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false );
-        smileMapper.disable( DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE );
-        return smileMapper;
+        return configureMapper( new ObjectMapper( new SmileFactory() ) );
     }
 
     protected static ObjectMapper createJsonMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule( new Jdk8Module() );
-        mapper.registerModule( new JavaTimeModule() );
-        mapper.registerModule( new GuavaModule() );
-        mapper.registerModule( new JodaModule() );
+        return configureMapper( new ObjectMapper() );
+    }
+
+    protected static ObjectMapper configureMapper( ObjectMapper mapper ) {
         mapper.registerModule( new AfterburnerModule() );
+        mapper.registerModule( new GuavaModule() );
+        mapper.registerModule( new JavaTimeModule() );
+        mapper.registerModule( new Jdk8Module() );
+        mapper.registerModule( new JodaModule() );
         mapper.registerModule( new KotlinModule() );
         mapper.configure( SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false );
         mapper.disable( DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE );
