@@ -63,7 +63,6 @@ inline fun <T, R> T.attempt(retryStrategy: RetryStrategy, maxAttempts: Int, bloc
     throw RetryableCallFailedException("Reached max number of retry attempts ($maxAttempts)")
 }
 
-
 open class ExponentialBackoff @JvmOverloads constructor(
         private val maxInterval: Long,
         minRatio: Double = 1.5,
